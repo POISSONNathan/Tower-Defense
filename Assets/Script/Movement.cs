@@ -9,7 +9,6 @@ public class Movement : MonoBehaviour
 
     public void SimpleMovement(Vector3 direction)
     {
-        //Temporaire
         transform.position += (direction*_speed*Time.deltaTime);
     }
 }

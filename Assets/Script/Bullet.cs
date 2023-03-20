@@ -15,12 +15,6 @@ public class Bullet : DetectionCompatible
     public override void OnDetection(Enemy enemy)
     {
         enemy.EnemyLife.DecreaseHP(_dammage);
-
-        if (enemy.EnemyLife.IsDead())
-        {
-            Destroy(enemy.gameObject);
-        }
-
         Destroy(gameObject);
     }
 

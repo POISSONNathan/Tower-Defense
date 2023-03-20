@@ -7,30 +7,42 @@ public class Tower : DetectionCompatible
 
     [SerializeField]
     private Bullet _bulletPrefab;
+
+    public List<Enemy> listEnemy;
+
+    private bool isShoot = false;
+
     public override void OnDetection(Enemy enemy)
     {
-        StartCoroutine(InflictDamage(enemy));
+        listEnemy.Add(enemy);
+        if (isShoot == false)
+        {
+            isShoot = true;
+            StartCoroutine(InflictDamage());
+        }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public override void OnExitDetection(Enemy enemy)
     {
-        
+        listEnemy.Remove(enemy);
+        if (listEnemy.Count != 0)
+        {
+            isShoot = false;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator InflictDamage()
     {
-        
-    }
-
-    //Temporaire 
-    private IEnumerator InflictDamage(Enemy enemy)
-    {
-        while (enemy != null)
+        while (listEnemy.Count != 0)
         {
             var bullet = Instantiate(_bulletPrefab, this.transform);
-            bullet.transform.LookAt(enemy.transform);
+            bullet.transform.LookAt(listEnemy[0].transform);
+
+            if (listEnemy[0].EnemyLife.IsDead())
+            {
+                Destroy(listEnemy[0].gameObject);
+                listEnemy.Remove(listEnemy[0]);
+            }
 
             yield return new WaitForSeconds(0.5f);
         }
