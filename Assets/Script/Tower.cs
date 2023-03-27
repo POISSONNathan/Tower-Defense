@@ -5,46 +5,52 @@ using UnityEngine;
 public class Tower : DetectionCompatible
 {
 
+    public List<Enemy> EnemiesToTarget;
+
     [SerializeField]
     private Bullet _bulletPrefab;
 
-    public List<Enemy> listEnemy;
+    private void Start()
+    {
+        StartCoroutine(InflictDamage());
 
-    private bool isShoot = false;
+    }
 
     public override void OnDetection(Enemy enemy)
     {
-        listEnemy.Add(enemy);
-        if (isShoot == false)
-        {
-            isShoot = true;
-            StartCoroutine(InflictDamage());
-        }
+        EnemiesToTarget.Add(enemy);
+        enemy.TowersAttackingMe.Add(this);
     }
 
-    public override void OnExitDetection(Enemy enemy)
+    public override void OnDetectionEnd(Enemy enemy)
     {
-        listEnemy.Remove(enemy);
-        if (listEnemy.Count != 0)
-        {
-            isShoot = false;
-        }
+        EnemiesToTarget.Remove(enemy);
+        enemy.TowersAttackingMe.Remove(this);
     }
 
+    //Temporaire 
     private IEnumerator InflictDamage()
     {
-        while (listEnemy.Count != 0)
+        while (true)
         {
-            var bullet = Instantiate(_bulletPrefab, this.transform);
-            bullet.transform.LookAt(listEnemy[0].transform);
 
-            if (listEnemy[0].EnemyLife.IsDead())
-            {
-                Destroy(listEnemy[0].gameObject);
-                listEnemy.Remove(listEnemy[0]);
-            }
+            yield return new WaitUntil(DoIHaveAValidTarget);
+
+            var targetEnemy = EnemiesToTarget[0];
+
+            var bullet = Instantiate(_bulletPrefab, this.transform);
+            bullet.transform.LookAt(targetEnemy.transform);
 
             yield return new WaitForSeconds(0.5f);
         }
+    }
+
+
+    private bool DoIHaveAValidTarget()
+    {
+        bool isMyListNotNull = EnemiesToTarget != null;
+        bool isMyListNotEmpty = EnemiesToTarget.Count > 0;
+
+        return isMyListNotNull && isMyListNotEmpty;
     }
 }

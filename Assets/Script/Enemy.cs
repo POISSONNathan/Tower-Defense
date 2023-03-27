@@ -6,8 +6,11 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField]
     private Movement _movement;
+
+    public List<Tower> TowersAttackingMe;
+
     public Life EnemyLife;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,5 +24,11 @@ public class Enemy : MonoBehaviour
         _movement.SimpleMovement(Vector3.left);
     }
 
-
+    private void OnDestroy()
+    {
+        foreach (var tower in TowersAttackingMe)
+        {
+            tower.EnemiesToTarget.Remove(this);
+        }
+    }
 }

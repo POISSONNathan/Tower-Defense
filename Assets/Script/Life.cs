@@ -6,8 +6,7 @@ public class Life : MonoBehaviour
 {
     [SerializeField]
     private int _maxHealthPoints;
-
-    public int _healthPoints;
+    private int _healthPoints;
 
     public void ResetLife()
     {
@@ -22,6 +21,10 @@ public class Life : MonoBehaviour
     public void DecreaseHP(int amount)
     {
         ChangeHP(-amount);
+        if (IsDead())
+        {
+            Destroy(gameObject);
+        }
     }
 
 
