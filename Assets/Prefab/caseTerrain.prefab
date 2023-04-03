@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 8865884553316307997}
   - component: {fileID: 5485208955837952279}
   - component: {fileID: 8621705715985460030}
-  - component: {fileID: 4335420468144677424}
-  m_Layer: 0
+  - component: {fileID: 2278432491907888201}
+  m_Layer: 6
   m_Name: caseTerrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: d1778b86834e5224eb99965f498c7911, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -98,7 +98,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4335420468144677424
+--- !u!114 &2278432491907888201
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,7 +107,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8330128644332823783}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84806c601a4326c4e867d07a80cceab8, type: 3}
+  m_Script: {fileID: 11500000, guid: 1a956f486092e4f41b13684dd3d81ddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabTower: {fileID: 4857587843401668525, guid: 89f3d2d5a9b43bc4f938f3a4a6c5e96a, type: 3}
+  _towerPrefab: {fileID: 3515135937259887542, guid: 89f3d2d5a9b43bc4f938f3a4a6c5e96a, type: 3}

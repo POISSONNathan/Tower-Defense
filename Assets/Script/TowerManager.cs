@@ -4,13 +4,28 @@ using UnityEngine;
 
 public class TowerManager : MonoBehaviour
 {
-    public List<GameObject> allTower;
+    [SerializeField]
+    private LayerMask _acceptedLayer;
 
-    public void setCollider(bool actibeOrNot)
+    void Update()
     {
-        for (int i = 0; i < allTower.Count; i++)
+        if (Input.GetMouseButtonDown(0))
         {
-            allTower[i].GetComponent<Collider>().enabled = actibeOrNot;
+            CheckForSpawnerAndCreateTower();
+        }
+    }
+
+    public void CheckForSpawnerAndCreateTower()
+    {
+        var mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane);
+        var mouseStartingPoint = Camera.main.ScreenToWorldPoint(mousePosition);
+
+        if (Physics.Raycast(Camera.main.transform.position, mouseStartingPoint - Camera.main.transform.position,out var HitTower ,120, _acceptedLayer))
+        {
+            if (HitTower.transform.GetComponent<TowerSpawner>())
+            {
+                HitTower.transform.GetComponent<TowerSpawner>().CreateTower();
+            }
         }
     }
 }
